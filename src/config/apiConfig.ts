@@ -114,23 +114,6 @@ export const makeApiRequest = async (url: string, options: ApiRequestOptions = {
         console.log('Response status:', response.status);
         console.log('Response ok:', response.ok);
 
-        // If unauthorized, force logout and redirect to sign-in
-        if (response.status === 401 || response.status === 403) {
-            if (response.status === 401) {
-                const hasSession = localStorage.getItem('auth_token');
-                if (hasSession) {
-                    console.warn('Authentication expired. Forcing logout.');
-                    localStorage.removeItem('auth_token');
-                    localStorage.removeItem('manualUser');
-                    localStorage.removeItem('mockUser');
-                    window.location.href = '/';
-                }
-                throw new Error('Session expired. Please sign in again.');
-            }
-            // 403 = permission denied, don't force redirect
-            throw new Error('You do not have permission to perform this action.');
-        }
-
         if (!response.ok) {
             const errorText = await response.text();
             console.error('API Error Response:', errorText);
@@ -152,17 +135,9 @@ export const makeApiRequest = async (url: string, options: ApiRequestOptions = {
     } catch (error) {
         console.error('API request failed:', error);
 
-        // On network errors, only force re-auth if user was actually logged in
         if (error instanceof Error && (error.message === 'Failed to fetch' || error.message.includes('fetch'))) {
-            const hasSession = localStorage.getItem('auth_token');
-            if (hasSession) {
-                console.warn('Backend unavailable while authenticated. Clearing session.');
-                localStorage.removeItem('auth_token');
-                localStorage.removeItem('manualUser');
-                localStorage.removeItem('mockUser');
-                window.location.href = '/';
-            }
-            throw new Error('Unable to connect to server. Please sign in again.');
+            console.warn('Backend unavailable or network error, falling back to mock data');
+            return createMockResponse(url, options.responseType);
         }
 
         throw error;
