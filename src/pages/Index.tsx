@@ -96,6 +96,7 @@ const Index = () => {
       currentUser={currentUser}
       userRole={userRole}
       setUserRole={setUserRole}
+      onSwitchApp={() => setSelectedApp(null)}
     />
   );
 };

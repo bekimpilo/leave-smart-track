@@ -11,9 +11,10 @@ interface MainLayoutProps {
   currentUser: any;
   userRole: 'employee' | 'manager' | 'admin' | 'cd';
   setUserRole: (role: 'employee' | 'manager' | 'admin' | 'cd') => void;
+  onSwitchApp?: () => void;
 }
 
-export const MainLayout = ({ currentUser, userRole, setUserRole }: MainLayoutProps) => {
+export const MainLayout = ({ currentUser, userRole, setUserRole, onSwitchApp }: MainLayoutProps) => {
   const [showRequestForm, setShowRequestForm] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [employeeBalance, setEmployeeBalance] = useState<EmployeeBalance | null>(null);
@@ -43,6 +44,7 @@ export const MainLayout = ({ currentUser, userRole, setUserRole }: MainLayoutPro
           activeTab={activeTab}
           onTabChange={setActiveTab}
           onRoleChange={setUserRole}
+          onSwitchApp={onSwitchApp}
         />
         <SidebarInset>
           {/* Header */}
