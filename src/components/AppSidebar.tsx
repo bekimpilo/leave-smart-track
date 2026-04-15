@@ -241,7 +241,7 @@ export const AppSidebar = ({
           
           {/* Switch app button */}
           {onSwitchApp && (
-            <Button variant="ghost" size="sm" onClick={onSwitchApp} className="w-full justify-start text-slate-600 hover:text-slate-800 hover:bg-slate-100">
+            <Button size="sm" onClick={onSwitchApp} className="w-full justify-start bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 shadow-sm">
               <ArrowLeftRight className="h-4 w-4 mr-2" />
               Switch App
             </Button>
