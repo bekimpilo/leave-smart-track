@@ -2,6 +2,7 @@ import express from 'express';
 import { executeQuery } from '../config/database';
 import { authenticateToken } from '../middleware/auth';
 import { loadTravelRole, requireTravelRole, TravelAuthRequest } from '../middleware/travelAuth';
+import { travelEmailService } from '../services/travelEmailService';
 
 const router = express.Router();
 router.use(authenticateToken, loadTravelRole);
@@ -81,6 +82,10 @@ router.post('/', async (req: TravelAuthRequest, res) => {
       );
     }
 
+    if (managerEmail) {
+      const [created] = await executeQuery('SELECT * FROM expense_claims WHERE id = ?', [claimId]);
+      travelEmailService.notifyManagerOfExpenseClaim(created, managerEmail).catch(err => console.error('email error', err));
+    }
     res.json({ success: true, id: claimId });
   } catch (e: any) {
     console.error('create expense claim', e);
@@ -100,6 +105,8 @@ router.post('/:id/decision', requireTravelRole(['manager', 'admin']), async (req
       `UPDATE expense_claims SET status = ?, manager_comment = ?, rejection_reason = ? WHERE id = ?`,
       [newStatus, comment || null, decision === 'reject' ? (comment || '') : null, req.params.id]
     );
+    const [updated] = await executeQuery('SELECT * FROM expense_claims WHERE id = ?', [req.params.id]);
+    if (updated) travelEmailService.notifyEmployeeOfExpenseDecision(updated, decision, comment).catch(err => console.error('email error', err));
     res.json({ success: true });
   } catch (e: any) {
     res.status(500).json({ success: false, message: e.message });
@@ -113,6 +120,8 @@ router.post('/:id/mark-paid', requireTravelRole(['finance_admin', 'admin']), asy
       `UPDATE expense_claims SET status = 'paid', finance_email = ?, finance_completed_at = NOW() WHERE id = ?`,
       [req.user!.email, req.params.id]
     );
+    const [updated] = await executeQuery('SELECT * FROM expense_claims WHERE id = ?', [req.params.id]);
+    if (updated) travelEmailService.notifyEmployeeExpensePaid(updated).catch(err => console.error('email error', err));
     res.json({ success: true });
   } catch (e: any) {
     res.status(500).json({ success: false, message: e.message });
