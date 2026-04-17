@@ -320,8 +320,8 @@ export const TravelRequestForm = ({ currentUser, onSubmitted }: Props) => {
             <div><Label>Per Diem Local (ZAR)</Label><Input value={`R ${localZar.toFixed(2)}`} disabled /></div>
             <div><Label>Per Diem Other (ZAR)</Label><Input value={`R ${otherZar.toFixed(2)}`} disabled /></div>
             <div><Label>Business Advance (ZAR)</Label><Input type="number" value={businessAdvance} onChange={e => setBusinessAdvance(Number(e.target.value))} /></div>
-            <div className="md:col-span-3 p-3 rounded-lg bg-emerald-50 border border-emerald-200">
-              <div className="flex justify-between text-base font-semibold text-emerald-900">
+            <div className="md:col-span-3 p-3 rounded-lg bg-blue-50 border border-blue-200">
+              <div className="flex justify-between text-base font-semibold text-blue-950">
                 <span>Total Requested (1+2+3)</span>
                 <span>R {totalZar.toFixed(2)}</span>
               </div>
@@ -360,7 +360,7 @@ export const TravelRequestForm = ({ currentUser, onSubmitted }: Props) => {
       </Card>
 
       <div className="flex justify-end gap-2 sticky bottom-4">
-        <Button onClick={submit} disabled={submitting} className="bg-emerald-600 hover:bg-emerald-700">
+        <Button onClick={submit} disabled={submitting} className="bg-blue-700 hover:bg-blue-800">
           {submitting ? 'Submitting…' : 'Submit Travel Request'}
         </Button>
       </div>

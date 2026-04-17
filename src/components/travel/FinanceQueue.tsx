@@ -82,7 +82,7 @@ export const FinanceQueue = () => {
                         <Button asChild size="sm" variant="ghost" title="View PDF">
                           <a href={travelPdfUrl(r.id)} target="_blank" rel="noopener noreferrer"><FileText className="h-4 w-4" /></a>
                         </Button>
-                        {(r.status === 'approved' || r.status === 'booked') && <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700" onClick={() => setTravelStatus(r.id, 'per_diem_paid')}>Mark Paid</Button>}
+                        {(r.status === 'approved' || r.status === 'booked') && <Button size="sm" className="bg-blue-700 hover:bg-blue-800" onClick={() => setTravelStatus(r.id, 'per_diem_paid')}>Mark Paid</Button>}
                         {r.status === 'per_diem_paid' && <Button size="sm" variant="outline" onClick={() => setTravelStatus(r.id, 'completed')}>Mark Completed</Button>}
                       </TableCell>
                     </TableRow>
@@ -107,7 +107,7 @@ export const FinanceQueue = () => {
                     <TableCell>R {Number(r.total_amount).toFixed(2)}</TableCell>
                     <TableCell><StatusBadge status={r.status} /></TableCell>
                     <TableCell className="text-right">
-                      {r.status === 'approved' && <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700" onClick={() => markExpensePaid(r.id)}>Mark Paid</Button>}
+                      {r.status === 'approved' && <Button size="sm" className="bg-blue-700 hover:bg-blue-800" onClick={() => markExpensePaid(r.id)}>Mark Paid</Button>}
                     </TableCell>
                   </TableRow>
                 ))}

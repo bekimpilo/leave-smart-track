@@ -46,12 +46,12 @@ export const TravelSidebar = ({ currentUser, travelRole, activeTab, onTabChange,
   const roleLabel = travelRole.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 
   return (
-    <aside className="hidden md:flex flex-col w-64 shrink-0 bg-gradient-to-b from-emerald-950 via-teal-950 to-emerald-900 text-white border-r border-emerald-800/50">
-      <div className="p-5 border-b border-emerald-800/50 flex items-center gap-3">
+    <aside className="hidden md:flex flex-col w-64 shrink-0 bg-gradient-to-b from-slate-950 via-blue-950 to-slate-900 text-white border-r border-blue-900/50">
+      <div className="p-5 border-b border-blue-900/50 flex items-center gap-3">
         <img src="/logo/chailogo.png" alt="CHAI" className="h-9 w-9 rounded bg-white/10 p-1" />
         <div>
           <div className="font-bold leading-tight">Travel & Expense</div>
-          <div className="text-xs text-emerald-300/80">CHAI Portal</div>
+          <div className="text-xs text-blue-300/80">CHAI Portal</div>
         </div>
       </div>
 
@@ -63,8 +63,8 @@ export const TravelSidebar = ({ currentUser, travelRole, activeTab, onTabChange,
             className={cn(
               "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all",
               activeTab === it.value
-                ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20"
-                : "text-emerald-100/80 hover:bg-emerald-800/50 hover:text-white"
+                ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20"
+                : "text-blue-100/80 hover:bg-blue-900/50 hover:text-white"
             )}
           >
             <it.icon className="h-4 w-4 shrink-0" />
@@ -73,19 +73,19 @@ export const TravelSidebar = ({ currentUser, travelRole, activeTab, onTabChange,
         ))}
       </nav>
 
-      <div className="p-4 border-t border-emerald-800/50 space-y-3">
+      <div className="p-4 border-t border-blue-900/50 space-y-3">
         <div className="flex items-center gap-3">
           <Avatar className="h-9 w-9">
-            <AvatarFallback className="bg-emerald-500 text-white text-xs">
+            <AvatarFallback className="bg-blue-600 text-white text-xs">
               {currentUser?.name?.split(' ').map((n: string) => n[0]).join('').slice(0, 2)}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium truncate">{currentUser?.name}</p>
-            <p className="text-xs text-emerald-300/70 truncate">{currentUser?.email}</p>
+            <p className="text-xs text-blue-300/70 truncate">{currentUser?.email}</p>
           </div>
         </div>
-        <Badge className="w-full justify-center bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 hover:bg-emerald-500/30">
+        <Badge className="w-full justify-center bg-blue-600/20 text-blue-200 border border-blue-400/30 hover:bg-blue-600/30">
           {roleLabel}
         </Badge>
         {onSwitchApp && (

@@ -159,7 +159,7 @@ export const ExpenseClaimForm = ({ currentUser, onSubmitted }: Props) => {
 
       <Card>
         <CardContent className="p-4">
-          <div className="flex justify-between items-center text-base font-semibold p-3 rounded-lg bg-emerald-50 text-emerald-900 border border-emerald-200">
+          <div className="flex justify-between items-center text-base font-semibold p-3 rounded-lg bg-blue-50 text-blue-950 border border-blue-200">
             <span>Total {purpose === 'advance_acquittal' ? 'Advance' : 'Reimbursement'}</span>
             <span>R {total.toFixed(2)}</span>
           </div>
@@ -167,7 +167,7 @@ export const ExpenseClaimForm = ({ currentUser, onSubmitted }: Props) => {
       </Card>
 
       <div className="flex justify-end">
-        <Button onClick={submit} disabled={submitting} className="bg-emerald-600 hover:bg-emerald-700">
+        <Button onClick={submit} disabled={submitting} className="bg-blue-700 hover:bg-blue-800">
           {submitting ? 'Submitting…' : 'Submit Claim'}
         </Button>
       </div>

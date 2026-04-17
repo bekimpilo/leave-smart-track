@@ -3,14 +3,14 @@ import { TravelStatus, ExpenseStatus } from "@/services/travelService";
 
 const colors: Record<string, string> = {
   pending: "bg-amber-100 text-amber-800 border-amber-200",
-  approved: "bg-emerald-100 text-emerald-800 border-emerald-200",
+  approved: "bg-blue-100 text-blue-900 border-blue-200",
   rejected: "bg-red-100 text-red-800 border-red-200",
   cancelled: "bg-gray-100 text-gray-700 border-gray-200",
   in_progress: "bg-blue-100 text-blue-800 border-blue-200",
   booked: "bg-indigo-100 text-indigo-800 border-indigo-200",
-  per_diem_paid: "bg-teal-100 text-teal-800 border-teal-200",
-  completed: "bg-emerald-100 text-emerald-900 border-emerald-300",
-  paid: "bg-emerald-100 text-emerald-800 border-emerald-200",
+  per_diem_paid: "bg-blue-100 text-blue-800 border-blue-200",
+  completed: "bg-blue-100 text-blue-950 border-blue-300",
+  paid: "bg-blue-100 text-blue-900 border-blue-200",
 };
 
 export const StatusBadge = ({ status }: { status: TravelStatus | ExpenseStatus | string }) => {

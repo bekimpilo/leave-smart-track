@@ -32,7 +32,7 @@ export const TravelDashboard = ({ currentUser, onNavigate }: Props) => {
   const myExp = expenses.filter(e => e.requester_email === currentUser?.email);
 
   const stats = [
-    { label: 'My Travel Requests', value: myTravel.length, icon: Plane, color: 'text-emerald-600 bg-emerald-100' },
+    { label: 'My Travel Requests', value: myTravel.length, icon: Plane, color: 'text-blue-700 bg-blue-100' },
     { label: 'Pending Approval', value: myTravel.filter(t => t.status === 'pending').length, icon: Clock, color: 'text-amber-600 bg-amber-100' },
     { label: 'Approved', value: myTravel.filter(t => ['approved','in_progress','booked','per_diem_paid','completed'].includes(t.status)).length, icon: CheckCircle2, color: 'text-blue-600 bg-blue-100' },
     { label: 'My Expense Claims', value: myExp.length, icon: Receipt, color: 'text-purple-600 bg-purple-100' },
@@ -46,7 +46,7 @@ export const TravelDashboard = ({ currentUser, onNavigate }: Props) => {
           <p className="text-muted-foreground text-sm">Manage travel requests and expense claims.</p>
         </div>
         <div className="flex gap-2">
-          <Button onClick={() => onNavigate('new-travel')} className="bg-emerald-600 hover:bg-emerald-700">
+          <Button onClick={() => onNavigate('new-travel')} className="bg-blue-700 hover:bg-blue-800">
             <Plane className="h-4 w-4 mr-2" /> New Travel
           </Button>
           <Button onClick={() => onNavigate('new-expense')} variant="outline">
