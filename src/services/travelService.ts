@@ -86,6 +86,19 @@ const uploadCsv = async (path: string, file: File) => {
   return r.json();
 };
 
+const uploadFile = async (path: string, file: File, extraFields?: Record<string, string>) => {
+  const fd = new FormData();
+  fd.append('file', file);
+  if (extraFields) Object.entries(extraFields).forEach(([k, v]) => fd.append(k, v));
+  const r = await makeApiRequest(`${API}${path}`, { method: 'POST', body: fd });
+  return r.json();
+};
+
+export const travelFileUrl = (kind: 'travel' | 'expense', attachmentId: number) =>
+  `${API}/api/travel-attachments/${kind}/file/${attachmentId}`;
+
+export const travelPdfUrl = (id: number) => `${API}/api/travel-pdf/travel/${id}`;
+
 // ============= Travel Role =============
 export const travelService = {
   // role
@@ -132,4 +145,13 @@ export const travelService = {
     postJSON(`/api/expense-claims/${id}/decision`, { decision, comment }),
   markExpensePaid: (id: number) => postJSON(`/api/expense-claims/${id}/mark-paid`),
   cancelExpenseClaim: (id: number) => postJSON(`/api/expense-claims/${id}/cancel`),
+
+  // attachments
+  listTravelAttachments: (id: number) => getJSON(`/api/travel-attachments/travel/${id}`),
+  uploadTravelAttachment: (id: number, f: File) => uploadFile(`/api/travel-attachments/travel/${id}`, f),
+  deleteTravelAttachment: (attachmentId: number) => del(`/api/travel-attachments/travel/file/${attachmentId}`),
+  listExpenseAttachments: (id: number) => getJSON(`/api/travel-attachments/expense/${id}`),
+  uploadExpenseAttachment: (id: number, f: File, lineId?: number) =>
+    uploadFile(`/api/travel-attachments/expense/${id}`, f, lineId ? { line_id: String(lineId) } : undefined),
+  deleteExpenseAttachment: (attachmentId: number) => del(`/api/travel-attachments/expense/file/${attachmentId}`),
 };
