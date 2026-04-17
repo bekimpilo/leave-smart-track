@@ -46,7 +46,7 @@ export const TravelSidebar = ({ currentUser, travelRole, activeTab, onTabChange,
   const roleLabel = travelRole.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 
   return (
-    <aside className="hidden md:flex flex-col w-64 shrink-0 bg-gradient-to-b from-slate-950 via-blue-950 to-blue-950 text-white border-r border-blue-900/50">
+    <aside className="hidden md:flex flex-col w-64 shrink-0 bg-gradient-to-b from-slate-950 via-blue-950 to-slate-900 text-white border-r border-blue-900/50">
       <div className="p-5 border-b border-blue-900/50 flex items-center gap-3">
         <img src="/logo/chailogo.png" alt="CHAI" className="h-9 w-9 rounded bg-white/10 p-1" />
         <div>
