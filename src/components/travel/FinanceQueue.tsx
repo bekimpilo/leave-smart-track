@@ -3,8 +3,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { travelService } from "@/services/travelService";
+import { travelService, travelPdfUrl } from "@/services/travelService";
 import { StatusBadge } from "./StatusBadge";
+import { FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export const FinanceQueue = () => {
@@ -77,7 +78,10 @@ export const FinanceQueue = () => {
                       <TableCell>R {Number(r.total_zar).toFixed(2)}</TableCell>
                       <TableCell className="text-xs">{r.bank_name || '—'} {r.account_number ? `· ${r.account_number}` : ''}</TableCell>
                       <TableCell><StatusBadge status={r.status} /></TableCell>
-                      <TableCell className="text-right space-x-2">
+                      <TableCell className="text-right space-x-1">
+                        <Button asChild size="sm" variant="ghost" title="View PDF">
+                          <a href={travelPdfUrl(r.id)} target="_blank" rel="noopener noreferrer"><FileText className="h-4 w-4" /></a>
+                        </Button>
                         {(r.status === 'approved' || r.status === 'booked') && <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700" onClick={() => setTravelStatus(r.id, 'per_diem_paid')}>Mark Paid</Button>}
                         {r.status === 'per_diem_paid' && <Button size="sm" variant="outline" onClick={() => setTravelStatus(r.id, 'completed')}>Mark Completed</Button>}
                       </TableCell>

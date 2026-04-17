@@ -2,6 +2,7 @@ import express from 'express';
 import { executeQuery } from '../config/database';
 import { authenticateToken } from '../middleware/auth';
 import { loadTravelRole, requireTravelRole, TravelAuthRequest } from '../middleware/travelAuth';
+import { travelEmailService } from '../services/travelEmailService';
 
 const router = express.Router();
 router.use(authenticateToken, loadTravelRole);
@@ -144,6 +145,12 @@ router.post('/', async (req: TravelAuthRequest, res) => {
       );
     }
 
+    // fire email to manager (non-blocking)
+    if (managerEmail) {
+      const [created] = await executeQuery('SELECT * FROM travel_requests WHERE id = ?', [trId]);
+      travelEmailService.notifyManagerOfTravelRequest(created, managerEmail).catch(err => console.error('email error', err));
+    }
+
     res.json({ success: true, id: trId });
   } catch (e: any) {
     console.error('create travel request', e);
@@ -164,6 +171,9 @@ router.post('/:id/decision', requireTravelRole(['manager', 'admin']), async (req
       `UPDATE travel_requests SET status = ?, manager_comment = ?, rejection_reason = ? WHERE id = ?`,
       [newStatus, comment || null, decision === 'reject' ? (comment || 'No reason given') : null, id]
     );
+    // notify employee + cascade
+    const [updated] = await executeQuery('SELECT * FROM travel_requests WHERE id = ?', [id]);
+    if (updated) travelEmailService.notifyEmployeeOfTravelDecision(updated, decision, comment).catch(err => console.error('email error', err));
     res.json({ success: true, status: newStatus });
   } catch (e: any) {
     res.status(500).json({ success: false, message: e.message });
@@ -197,6 +207,10 @@ router.post('/:id/coordinator-status', requireTravelRole(['office_coordinator', 
       `UPDATE travel_requests SET status = ?, coordinator_email = ?, coordinator_completed_at = ${status === 'booked' ? 'NOW()' : 'NULL'} WHERE id = ?`,
       [status, req.user!.email, req.params.id]
     );
+    if (status === 'booked') {
+      const [tr] = await executeQuery('SELECT * FROM travel_requests WHERE id = ?', [req.params.id]);
+      if (tr) travelEmailService.notifyFinanceOfBookedTravel(tr).catch(err => console.error('email error', err));
+    }
     res.json({ success: true });
   } catch (e: any) {
     res.status(500).json({ success: false, message: e.message });

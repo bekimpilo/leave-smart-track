@@ -6,8 +6,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { travelService } from "@/services/travelService";
+import { travelService, travelPdfUrl } from "@/services/travelService";
 import { StatusBadge } from "./StatusBadge";
+import { AttachmentManager } from "./AttachmentManager";
+import { FileText, Paperclip } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface Props { currentUser: any; }
@@ -76,7 +78,10 @@ export const ManagerApprovals = ({ currentUser }: Props) => {
                       <TableCell>{r.place_to_be_visited}</TableCell>
                       <TableCell>R {Number(r.total_zar).toFixed(2)}</TableCell>
                       <TableCell className="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleDateString()}</TableCell>
-                      <TableCell className="text-right space-x-2">
+                      <TableCell className="text-right space-x-1">
+                        <Button asChild size="sm" variant="ghost" title="View PDF">
+                          <a href={travelPdfUrl(r.id)} target="_blank" rel="noopener noreferrer"><FileText className="h-4 w-4" /></a>
+                        </Button>
                         <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700" onClick={() => setDecisionTarget({ kind: 'travel', id: r.id, action: 'approve' })}>Approve</Button>
                         <Button size="sm" variant="destructive" onClick={() => setDecisionTarget({ kind: 'travel', id: r.id, action: 'reject' })}>Reject</Button>
                       </TableCell>
