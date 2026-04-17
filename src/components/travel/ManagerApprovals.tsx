@@ -82,7 +82,7 @@ export const ManagerApprovals = ({ currentUser }: Props) => {
                         <Button asChild size="sm" variant="ghost" title="View PDF">
                           <a href={travelPdfUrl(r.id)} target="_blank" rel="noopener noreferrer"><FileText className="h-4 w-4" /></a>
                         </Button>
-                        <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700" onClick={() => setDecisionTarget({ kind: 'travel', id: r.id, action: 'approve' })}>Approve</Button>
+                        <Button size="sm" className="bg-blue-700 hover:bg-blue-800" onClick={() => setDecisionTarget({ kind: 'travel', id: r.id, action: 'approve' })}>Approve</Button>
                         <Button size="sm" variant="destructive" onClick={() => setDecisionTarget({ kind: 'travel', id: r.id, action: 'reject' })}>Reject</Button>
                       </TableCell>
                     </TableRow>
@@ -107,7 +107,7 @@ export const ManagerApprovals = ({ currentUser }: Props) => {
                       <TableCell className="capitalize">{r.purpose.replace('_',' ')}</TableCell>
                       <TableCell>R {Number(r.total_amount).toFixed(2)}</TableCell>
                       <TableCell className="text-right space-x-2">
-                        <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700" onClick={() => setDecisionTarget({ kind: 'expense', id: r.id, action: 'approve' })}>Approve</Button>
+                        <Button size="sm" className="bg-blue-700 hover:bg-blue-800" onClick={() => setDecisionTarget({ kind: 'expense', id: r.id, action: 'approve' })}>Approve</Button>
                         <Button size="sm" variant="destructive" onClick={() => setDecisionTarget({ kind: 'expense', id: r.id, action: 'reject' })}>Reject</Button>
                       </TableCell>
                     </TableRow>
@@ -128,7 +128,7 @@ export const ManagerApprovals = ({ currentUser }: Props) => {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDecisionTarget(null)}>Cancel</Button>
-            <Button className={decisionTarget?.action === 'approve' ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-red-600 hover:bg-red-700'} onClick={submitDecision}>Confirm</Button>
+            <Button className={decisionTarget?.action === 'approve' ? 'bg-blue-700 hover:bg-blue-800' : 'bg-red-600 hover:bg-red-700'} onClick={submitDecision}>Confirm</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

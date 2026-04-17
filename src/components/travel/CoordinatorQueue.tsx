@@ -56,7 +56,7 @@ export const CoordinatorQueue = () => {
                       <a href={travelPdfUrl(r.id)} target="_blank" rel="noopener noreferrer"><FileText className="h-4 w-4" /></a>
                     </Button>
                     {r.status === 'approved' && <Button size="sm" variant="outline" onClick={() => setStatus(r.id, 'in_progress')}>Mark In Progress</Button>}
-                    {(r.status === 'approved' || r.status === 'in_progress') && <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700" onClick={() => setStatus(r.id, 'booked')}>Mark Booked</Button>}
+                    {(r.status === 'approved' || r.status === 'in_progress') && <Button size="sm" className="bg-blue-700 hover:bg-blue-800" onClick={() => setStatus(r.id, 'booked')}>Mark Booked</Button>}
                   </TableCell>
                 </TableRow>
               ))}
