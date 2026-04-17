@@ -96,9 +96,8 @@ export const AppSelector = ({ currentUser, onSelectApp }: AppSelectorProps) => {
                   <p className="text-sm text-white/40 leading-relaxed">
                     Submit travel requests, expense claims, and track reimbursements.
                   </p>
-                  <div className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-amber-400/80 bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-full">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-                    Coming Soon
+                  <div className="mt-6 flex items-center text-emerald-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0">
+                    Open app →
                   </div>
                 </div>
               </div>

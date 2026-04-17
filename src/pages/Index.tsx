@@ -6,6 +6,7 @@ import { AuthenticationPage } from "@/components/auth/AuthenticationPage";
 import { MainLayout } from "@/components/layout/MainLayout";
 import { MaintenancePage } from "@/components/MaintenancePage";
 import { AppSelector } from "@/components/AppSelector";
+import { TravelApp } from "@/components/travel/TravelApp";
 import { useUserRole } from "@/hooks/useUserRole";
 
 const Index = () => {
@@ -73,21 +74,13 @@ const Index = () => {
     );
   }
 
-  // Travel app placeholder (to be built later)
+  // Travel & Expense module
   if (selectedApp === 'travel') {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Travel & Expense Claims</h1>
-          <p className="text-gray-500 mb-6">This module is coming soon.</p>
-          <button
-            onClick={() => setSelectedApp(null)}
-            className="text-blue-600 hover:underline"
-          >
-            ← Back to app selection
-          </button>
-        </div>
-      </div>
+      <TravelApp
+        currentUser={currentUser}
+        onSwitchApp={() => setSelectedApp(null)}
+      />
     );
   }
 
