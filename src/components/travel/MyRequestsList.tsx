@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { travelService, TravelRequestRow, ExpenseClaimRow } from "@/services/travelService";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { FileText, Paperclip } from "lucide-react";
+import { travelService, TravelRequestRow, ExpenseClaimRow, travelPdfUrl } from "@/services/travelService";
 import { StatusBadge } from "./StatusBadge";
+import { AttachmentManager } from "./AttachmentManager";
 import { useToast } from "@/hooks/use-toast";
 
 type Mode = 'travel' | 'expense';
@@ -13,6 +16,7 @@ export const MyRequestsList = ({ mode, currentUser }: Props) => {
   const { toast } = useToast();
   const [rows, setRows] = useState<(TravelRequestRow | ExpenseClaimRow)[]>([]);
   const [loading, setLoading] = useState(true);
+  const [attachmentTarget, setAttachmentTarget] = useState<number | null>(null);
 
   const load = async () => {
     setLoading(true);
@@ -69,9 +73,24 @@ export const MyRequestsList = ({ mode, currentUser }: Props) => {
                     </>}
                     <TableCell><StatusBadge status={r.status} /></TableCell>
                     <TableCell className="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleDateString()}</TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right space-x-1">
+                      {mode === 'travel' && (
+                        <>
+                          <Button asChild size="sm" variant="ghost" title="View PDF">
+                            <a href={travelPdfUrl(r.id)} target="_blank" rel="noopener noreferrer"><FileText className="h-4 w-4" /></a>
+                          </Button>
+                          <Button size="sm" variant="ghost" title="Attachments" onClick={() => setAttachmentTarget(r.id)}>
+                            <Paperclip className="h-4 w-4" />
+                          </Button>
+                        </>
+                      )}
+                      {mode === 'expense' && (
+                        <Button size="sm" variant="ghost" title="Attachments" onClick={() => setAttachmentTarget(r.id)}>
+                          <Paperclip className="h-4 w-4" />
+                        </Button>
+                      )}
                       {r.status === 'pending' && (
-                        <Button size="sm" variant="ghost" className="text-red-600" onClick={() => cancel(r.id)}>Cancel</Button>
+                        <Button size="sm" variant="ghost" className="text-destructive" onClick={() => cancel(r.id)}>Cancel</Button>
                       )}
                     </TableCell>
                   </TableRow>
@@ -81,6 +100,15 @@ export const MyRequestsList = ({ mode, currentUser }: Props) => {
           )}
         </CardContent>
       </Card>
+
+      <Dialog open={attachmentTarget !== null} onOpenChange={o => !o && setAttachmentTarget(null)}>
+        <DialogContent>
+          <DialogHeader><DialogTitle>Attachments — #{attachmentTarget}</DialogTitle></DialogHeader>
+          {attachmentTarget !== null && (
+            <AttachmentManager kind={mode} recordId={attachmentTarget} canEdit />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

@@ -119,7 +119,7 @@ export const AttachmentManager = ({ kind, recordId, canEdit = true }: Props) => 
                 <span className="text-xs text-muted-foreground ml-2 shrink-0">{formatBytes(a.file_size)}</span>
               </a>
               {canEdit && (
-                <Button size="sm" variant="ghost" onClick={() => onDelete(a.id)} className="text-red-600 h-7 w-7 p-0">
+                <Button size="sm" variant="ghost" onClick={() => onDelete(a.id)} className="text-destructive h-7 w-7 p-0">
                   <Trash2 className="h-3.5 w-3.5" />
                 </Button>
               )}
